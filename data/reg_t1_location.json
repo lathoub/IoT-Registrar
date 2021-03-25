@@ -1,0 +1,12 @@
+{
+    "name": "qwqwe",
+    "description": "erterty",
+    "encodingType": "application/vnd.geo+json",
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            0,
+            0
+        ]
+    }
+}
