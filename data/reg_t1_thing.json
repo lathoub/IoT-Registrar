@@ -1,9 +1,9 @@
 {
-    "name": "adfsdfg",
-    "description": "sdfgsdfg",
+    "name": "Snuffel",
+    "description": "Milieumetingen",
     "properties": {
-        "erwtwert": "sdfgsdfg",
-        "wertewrt": "ytujru"
+        "Copyright": "2021 PepEngineering",
+        "Version": "8.0"
     },
     "Locations": [
     ],

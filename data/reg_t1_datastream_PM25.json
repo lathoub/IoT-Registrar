@@ -1,0 +1,10 @@
+{
+    "name": "PM25",
+    "description": "PM25",
+    "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+    "unitOfMeasurement": {
+        "name": "Parts per Million",
+        "symbol": "ppm",
+        "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+    }
+}
