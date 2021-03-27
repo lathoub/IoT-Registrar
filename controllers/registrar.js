@@ -109,7 +109,7 @@ async function register(req, res) {
                 response.ds.push(o)
             }
 
-            res.status(200).json(response)
+            res.status(201).json(response)
         })
         .catch(error => {
             debug(error)
