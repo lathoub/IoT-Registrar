@@ -3,6 +3,9 @@ const utils = require('../utils/utils.js')
 const http = require('axios')
 const registrar = require('../models/registrar.js');
 
+var env = process.env.NODE_ENV || 'development';
+var config = require('../config')[env];
+
 var fs = require('fs');
 var path = require('path');
 
@@ -11,6 +14,9 @@ function readJsonFile(fileName) {
     var json = JSON.parse(rawData);
     return json
 }
+
+var rawData = fs.readFileSync(path.join("./", "data", `reg_shorter.json`));
+var shorter = JSON.parse(rawData);
 
 function makeThing(type, version) {
     var thing = readJsonFile(`reg_${type}${version}_thing.json`)
@@ -65,13 +71,16 @@ async function register(req, res) {
     if (0 == records.length) {
         var _thing = makeThing(type, version)
 
+        //debug(JSON.stringify(_thing))
+
         await http
-            .post(`${serviceUrl.href}/things`, _thing)
+            .post(`${config.pitas.serviceUrl}/Things`, _thing)
             .then(r => {
                 id = r.data['@iot.id']
+                debug(r)
             })
             .then(r => {
-                register.insert(serial, id)
+                registrar.insert(serial, id)
             })
             .catch(error => {
                 debug(error)
@@ -82,44 +91,40 @@ async function register(req, res) {
     }
 
     await http
-    .get(`${serviceUrl.href}/Things${id}/Datastreams`, _thing)
-    .then(r => {
-        id = r.data['@iot.id']
-    })
-    .then(r => {
-        register.insert(serial, id)
-    })
-    .catch(error => {
-        debug(error)
-    })
+        .get(`${config.pitas.serviceUrl}/Things(${id})/Datastreams?$expand=ObservedProperty`)
+        .then(r => {
+            var response = {}
+            response.time = new Date().toISOString()
+            response.cnt = r.data.value.length
+            response.ds = []
+
+            var freq = config.frequency || 15
+            var use = config.use || 1
+
+            for (var ds of r.data.value) {
+                var observedProperty = ds['ObservedProperty']
+                var short = shorter[`${type}${version}`][observedProperty.name]
+                var o = new Object();
+                o[short] = `${ds["@iot.id"]},${freq},${use}`
+                response.ds.push(o)
+            }
+
+            // reduce header overhead
+            res.removeHeader('etag')
+            res.removeHeader('X-Powered-By');
+            res.status(200).json(response)
+        })
+        .catch(error => {
+            debug(error)
+        })
 
 
-
-
-
-
-    var response = {}
-    response.time = new Date().toISOString()
-
-    // TODO ophalen van observed properties
-
-    response.ds_count = 5
-    response.ds = []
-    response.ds.push({ "temp": 1, "freq": 15, "use": 1 })
-    response.ds.push({ "rv": 2, "freq": 15, "use": 1 })
-    response.ds.push({ "pm10": 3, "freq": 15, "use": 1 })
-    response.ds.push({ "pm25": 4, "freq": 15, "use": 1 })
-    response.ds.push({ "gas": 5, "freq": 15, "use": 1 })
-    response.ds.push({ "geluid": 6, "freq": 15, "use": 1 })
-    response.ds.push({ "mV": 7, "freq": 15, "use": 1 })
-
-    res.status(200).json(response)
 }
 
 async function update(req, res) {
-  res.status(200).json('{}')
+    res.status(200).json('{}')
 }
 
 module.exports = {
-  register, update
+    register, update
 }

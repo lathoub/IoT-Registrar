@@ -1,0 +1,11 @@
+{
+    "t1": {
+        "Area Temperature": "temp",
+        "Rel Humidity": "rv",
+        "Particulates PM10": "pm10",
+        "Particulates PM25": "pm25",
+        "NO2": "gas",
+        "Geluidsdruk": "db",
+        "Volt": "mV"
+    }
+}

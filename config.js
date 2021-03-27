@@ -3,6 +3,9 @@ var config = {
     express: {
       port: process.env.EXPRESS_PORT || 8081,
     },
+    pitas: {
+      serviceUrl: 'http://localhost:8080/v1.0',
+    },
     version: 'v1.0',
     mariadb: {
       host: '192.168.1.15',
@@ -14,6 +17,9 @@ var config = {
   production: {
     express: {
       port: process.env.EXPRESS_PORT || 8081,
+    },
+    pitas: {
+      serviceUrl: 'http://localhost:8080/v1.0',
     },
     version: 'v1.0',
     mariadb: {
