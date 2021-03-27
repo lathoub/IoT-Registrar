@@ -1,4 +1,4 @@
-const debug = require('debug')('pitas:json2sql')
+const debug = require('debug')('registrar:json2sql')
 var database = require('../database')
 
 async function json2insert(schema, obj) {

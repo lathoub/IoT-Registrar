@@ -1,4 +1,4 @@
-const debug = require('debug')('pitas:models')
+const debug = require('debug')('registrar:models')
 var database = require('../database')
 
 async function find(serial) {

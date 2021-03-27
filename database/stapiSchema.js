@@ -1,4 +1,4 @@
-const debug = require('debug')('pitas:database:schema')
+const debug = require('debug')('registrar:database:schema')
 
 const FeatureOfInterest = {
     'name': 'FeatureOfInterest',

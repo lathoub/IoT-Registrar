@@ -1,4 +1,4 @@
-const debug = require('debug')('pitas:register:controller')
+const debug = require('debug')('registrar:controller')
 const utils = require('../utils/utils.js')
 const http = require('axios')
 const registrar = require('../models/registrar.js');
@@ -80,6 +80,23 @@ async function register(req, res) {
         var record = records[0]
         id = record.id
     }
+
+    await http
+    .get(`${serviceUrl.href}/Things${id}/Datastreams`, _thing)
+    .then(r => {
+        id = r.data['@iot.id']
+    })
+    .then(r => {
+        register.insert(serial, id)
+    })
+    .catch(error => {
+        debug(error)
+    })
+
+
+
+
+
 
     var response = {}
     response.time = new Date().toISOString()

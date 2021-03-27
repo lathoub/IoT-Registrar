@@ -1,7 +1,7 @@
 process.browser = true
 global.window = { process: { type: 'renderer' } }
 
-const debug = require('debug')('pitas:http')
+const debug = require('debug')('registrar:http')
 const app = require('./index')
 require('dotenv').config();
 

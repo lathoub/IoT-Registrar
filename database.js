@@ -1,5 +1,5 @@
 const mariadb = require('mariadb'); // use Promise API
-const debug = require('debug')('pitas:database')
+const debug = require('debug')('registrar:database')
 
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config')[env];

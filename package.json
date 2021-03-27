@@ -8,6 +8,6 @@
     "mariadb": "^2.5.3"
   },
   "scripts": {
-    "start": "set DEBUG=registrar:*&&node app.js"
+    "start": "node app.js"
   }
 }

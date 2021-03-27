@@ -1,4 +1,4 @@
-const debug = require('debug')('pitas:utils')
+const debug = require('debug')('registrar:utils')
 var path = require('path')
 
 function getServiceUrl(req) {

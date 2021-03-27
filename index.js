@@ -1,5 +1,5 @@
 const express = require('express')
-const debug = require('debug')('pitas:route')
+const debug = require('debug')('registrar:route')
 
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config')[env];

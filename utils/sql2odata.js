@@ -1,4 +1,4 @@
-const debug = require('debug')('pitas:controller')
+const debug = require('debug')('registrar:controller')
 const schema = require('../database/stapiSchema.js');
 const _odata = require('../utils/odata.js');
 const utils = require('../utils/utils.js');
