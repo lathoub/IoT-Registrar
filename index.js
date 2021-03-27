@@ -1,6 +1,8 @@
 const express = require('express')
 const debug = require('debug')('registrar:route')
 
+var helmet = require('helmet')
+
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config')[env];
 require('dotenv').config()
@@ -19,6 +21,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.set('etag', false)
 app.disable('x-powered-by');
+//app.use(helmet())
 
 const API_VERSION = "v1.0"
 const version = config.api_version || API_VERSION;
