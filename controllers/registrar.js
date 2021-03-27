@@ -109,9 +109,6 @@ async function register(req, res) {
                 response.ds.push(o)
             }
 
-            // reduce header overhead
-            res.removeHeader('etag')
-            res.removeHeader('X-Powered-By');
             res.status(200).json(response)
         })
         .catch(error => {

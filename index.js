@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 
 app.set('etag', false)
+app.disable('x-powered-by');
 
 const API_VERSION = "v1.0"
 const version = config.api_version || API_VERSION;
