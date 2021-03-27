@@ -57,8 +57,8 @@ function makeThing(type, version) {
     return thing
 }
 
-async function register(req, res) {
-    debug(`register post`)
+async function Register(req, res) {
+    debug(`Register post`)
     const serviceUrl = utils.getServiceUrl(req)
 
     var type = /*req.body.type ??*/ 't'
@@ -109,7 +109,7 @@ async function register(req, res) {
                 response.ds.push(o)
             }
 
-            res.status(201).json(response)
+            res.status(200).json(response)
         })
         .catch(error => {
             debug(error)
@@ -118,10 +118,50 @@ async function register(req, res) {
 
 }
 
-async function update(req, res) {
-    res.status(200).json('{}')
+async function Update(req, res) {
+    debug(`Update post`)
+    const serviceUrl = utils.getServiceUrl(req)
+
+    var type = /*req.body.type ??*/ 't'
+    var version = /*req.body.version ??*/ '1'
+    var serial = req.body.serial
+    var id = 0
+
+    // known serial?
+    var records = await registrar.find(serial)
+    if (0 == records.length) {
+        throw new Error('NOT FOUND')
+    } else {
+        var record = records[0]
+        id = record.id
+    }
+
+    await http
+        .get(`${config.pitas.serviceUrl}/Things(${id})/Datastreams?$expand=ObservedProperty`)
+        .then(r => {
+            var response = {}
+            response.time = new Date().toISOString()
+            response.cnt = r.data.value.length
+            response.ds = []
+
+            var freq = config.frequency || 15
+            var use = config.use || 1
+
+            for (var ds of r.data.value) {
+                var observedProperty = ds['ObservedProperty']
+                var short = shorter[`${type}${version}`][observedProperty.name]
+                var o = new Object();
+                o[short] = `${ds["@iot.id"]},${freq},${use}`
+                response.ds.push(o)
+            }
+
+            res.status(200).json(response)
+        })
+        .catch(error => {
+            debug(error)
+        })
 }
 
 module.exports = {
-    register, update
+    Register, Update
 }
