@@ -77,7 +77,6 @@ async function Register(req, res) {
             .post(`${config.pitas.serviceUrl}/Things`, _thing)
             .then(r => {
                 id = r.data['@iot.id']
-                debug(r)
             })
             .then(r => {
                 registrar.insert(serial, id)
@@ -114,8 +113,6 @@ async function Register(req, res) {
         .catch(error => {
             debug(error)
         })
-
-
 }
 
 async function Update(req, res) {
