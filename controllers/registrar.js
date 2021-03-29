@@ -138,6 +138,7 @@ async function Update(req, res) {
         .then(r => {
             var response = {}
             response.time = new Date().toISOString()
+            response.sendFreq = 8
             response.cnt = r.data.value.length
             response.ds = []
 
