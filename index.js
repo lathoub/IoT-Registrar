@@ -25,14 +25,15 @@ app.disable('x-powered-by');
 
 const API_VERSION = "v1.0"
 const version = config.api_version || API_VERSION;
+const service = config.service;
 
 start()
 
 async function start() {
   await database.connect()
 
-  app.use(`/${version}/`, require('./route'))
-  debug(`/${version}/ running`)
+  app.use(`/${service}/${version}/`, require('./route'))
+  debug(`/${service}/${version}/ running`)
 }
 
 module.exports = app
