@@ -9,12 +9,12 @@ var fs = require('fs');
 var path = require('path');
 
 async function Register(req, res) {
-    debug(`Register post`)
-
     var type = /*req.body.type ??*/ 't'
     var version = /*req.body.version ??*/ '1'
     var serial = req.body.serial
     var id = 0
+
+    debug(`Registration from device with serial: ${serial}`)
 
     var rawData = fs.readFileSync(path.join('./config', `/${config.service}`, `thing.json`));
     var _thing = JSON.parse(rawData);
@@ -24,10 +24,14 @@ async function Register(req, res) {
     // known serial?
     var records = await registrar.find(config.service, serial)
     if (0 == records.length) {
+
+        debug(`Unknown device ${serial}, setting it up in ${serviceUrl}`)
+
         await http
             .post(`${serviceUrl}/Things`, _thing)
             .then(r => {
                 id = r.data['@iot.id']
+                debug(`Unknown device ${serial}, has been assigned Thing@iot.id ${id} `)
             })
             .then(r => {
                 registrar.insert(config.service, serial, id)
@@ -37,12 +41,14 @@ async function Register(req, res) {
             })
     } else {
         var record = records[0]
+        debug(`Known device ${serial} with Thing@iot.id ${id} registered`)
         id = record.id
     }
 
     await http
         .get(`${serviceUrl}/Things(${id})/Datastreams?$expand=ObservedProperty`)
         .then(r => {
+            debug(`Creating response for Thing@iot.id ${id}`)
             var response = require(`../config/${config.service}/returnObject.js`).getReturnObject(r, config);
             res.status(200).json(response)
         })
