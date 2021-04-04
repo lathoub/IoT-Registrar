@@ -1,10 +1,10 @@
 const debug = require('debug')('registrar:models')
 var database = require('../database')
 
-async function find(serial) {
+async function find(service, serial) {
   debug(`find`)
 
-  var select = `SELECT * FROM register WHERE serial = '${serial}'`
+  var select = `SELECT * FROM register WHERE service = '${service}' AND serial = '${serial}'`
   var sql = select
   try {
     var conn = await database.pool().getConnection()
@@ -18,11 +18,11 @@ async function find(serial) {
   }
 }
 
-async function insert(serial, id) {
+async function insert(service, serial, id) {
   debug(`insert`)
 
-  var sql = `INSERT INTO register (serial, id) VALUES (?,?)`
-  var values = [serial, id]
+  var sql = `INSERT INTO register (service, serial, id) VALUES (?,?,?)`
+  var values = [service, serial, id]
 
   try {
     var conn = await database.pool().getConnection()

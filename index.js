@@ -25,7 +25,7 @@ app.disable('x-powered-by');
 
 const API_VERSION = "v1.0"
 const version = config.api_version || API_VERSION;
-const service = config.service;
+const service = process.env.SERVICE;
 
 start()
 

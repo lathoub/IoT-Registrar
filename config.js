@@ -1,13 +1,15 @@
 var config = {
   development: {
     express: {
-      port: process.env.EXPRESS_PORT || 8080,
+      port: process.env.EXPRESS_PORT || 8081,
     },
+    service: 'replaced in app.js',
     pitas: {
-      serviceUrl: 'http://localhost:8080/v1.0',
+      protocol: 'http://',
+      host: 'kontich.synology.me',
+      port: 8080
     },
     version: 'v1.0',
-    service: process.env.SERVICE || 'registrar',
     mariadb: {
       host: '192.168.0.157',
       user: 'patrice',
@@ -19,11 +21,13 @@ var config = {
     express: {
       port: process.env.EXPRESS_PORT || 8081,
     },
+    service: 'replaced in app.js',
     pitas: {
-      serviceUrl: 'http://localhost:8080/v1.0',
+      protocol: 'http://',
+      host: 'kontich.synology.me',
+      port: 8080
     },
     version: 'v1.0',
-    service: process.env.SERVICE || 'registrar',
     mariadb: {
       host: '192.168.0.157',
       user: 'patrice',

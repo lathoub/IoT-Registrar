@@ -1,0 +1,136 @@
+{
+    "name": "Snuffel",
+    "description": "Milieumetingen",
+    "properties": {
+        "Copyright": "2021 PepEngineering",
+        "Version": "8.0"
+    },
+    "Locations": [
+        {
+            "name": "At the factory",
+            "description": "initiele locatie",
+            "encodingType": "application/vnd.geo+json",
+            "location": {
+                "type": "Point",
+                "coordinates": [
+                    0,
+                    0
+                ]
+            }
+        }
+    ],
+    "Datastreams": [
+        {
+            "name": "Air Temperature DS",
+            "description": "Datastream for recording temperature",
+            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+            "unitOfMeasurement": {
+                "name": "Degree Celsius",
+                "symbol": "degC",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+            },
+            "ObservedProperty": {
+                "@iot.id": 1
+            },
+            "Sensor": {
+                "@iot.id": 1
+            }
+        },
+        {
+            "name": "Relative Luchtvochtigheid",
+            "description": "Relative Luchtvochtigheid",
+            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+            "unitOfMeasurement": {
+                "name": "Procent",
+                "symbol": "%",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+            },
+            "ObservedProperty": {
+                "@iot.id": 2
+            },
+            "Sensor": {
+                "@iot.id": 2
+            }
+        },
+        {
+            "name": "PM10",
+            "description": "Datastream for recording temperature",
+            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+            "unitOfMeasurement": {
+                "name": "Parts per Million",
+                "symbol": "ppm",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+            },
+            "ObservedProperty": {
+                "@iot.id": 3
+            },
+            "Sensor": {
+                "@iot.id": 3
+            }
+        },
+        {
+            "name": "PM25",
+            "description": "PM25",
+            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+            "unitOfMeasurement": {
+                "name": "Parts per Million",
+                "symbol": "ppm",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+            },
+            "ObservedProperty": {
+                "@iot.id": 4
+            },
+            "Sensor": {
+                "@iot.id": 4
+            }
+        },
+        {
+            "name": "NO2",
+            "description": "NO2",
+            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+            "unitOfMeasurement": {
+                "name": "Parts per Million",
+                "symbol": "ppm",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+            },
+            "ObservedProperty": {
+                "@iot.id": 5
+            },
+            "Sensor": {
+                "@iot.id": 5
+            }
+        },
+        {
+            "name": "Geluidsdruk",
+            "description": "Geluidsdruk",
+            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+            "unitOfMeasurement": {
+                "name": "Decibel",
+                "symbol": "dbA",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+            },
+            "ObservedProperty": {
+                "@iot.id": 6
+            },
+            "Sensor": {
+                "@iot.id": 6
+            }
+        },
+        {
+            "name": "Spanning",
+            "description": "Spanning",
+            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+            "unitOfMeasurement": {
+                "name": "Volt",
+                "symbol": "v",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+            },
+            "ObservedProperty": {
+                "@iot.id": 7
+            },
+            "Sensor": {
+                "@iot.id": 7
+            }
+        }
+    ]
+}

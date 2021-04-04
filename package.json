@@ -9,6 +9,6 @@
     "mariadb": "^2.5.3"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "set DEBUG=registrar:* && node app.js"
   }
 }
