@@ -1,9 +1,9 @@
 {
-    "name": "Snuffel",
-    "description": "Milieumetingen",
+    "name": "Tracker",
+    "description": "Vehicle Tracker",
     "properties": {
         "Copyright": "2021 Lathoub",
-        "Version": "8.0"
+        "Version": "1.0"
     },
     "Locations": [
         {
@@ -21,16 +21,16 @@
     ],
     "Datastreams": [
         {
-            "name": "Air Temperature DS",
-            "description": "Datastream for recording temperature",
+            "name": "Vehicle Speed",
+            "description": "Speed at waypoints",
             "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
             "unitOfMeasurement": {
-                "name": "Degree Celsius",
-                "symbol": "degC",
-                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+                "name": "Velocity",
+                "symbol": "km/hr",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#KilometerPerHour"
             },
             "ObservedProperty": {
-                "@iot.id": 1
+                "@iot.id": 2
             },
             "Sensor": {
                 "@iot.id": 1

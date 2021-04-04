@@ -6,7 +6,7 @@ var config = {
     service: 'replaced in app.js',
     pitas: {
       protocol: 'http://',
-      host: 'kontich.synology.me',
+      host: 'localhost',
       port: 8080
     },
     version: 'v1.0',

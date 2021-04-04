@@ -24,7 +24,6 @@ async function Register(req, res) {
     // known serial?
     var records = await registrar.find(config.service, serial)
     if (0 == records.length) {
-
         await http
             .post(`${serviceUrl}/Things`, _thing)
             .then(r => {
@@ -54,9 +53,8 @@ async function Register(req, res) {
 
             for (var ds of r.data.value) {
                 var observedProperty = ds['ObservedProperty']
-                var short = shorter[`${type}${version}`][observedProperty.name]
                 var o = new Object();
-                o[short] = `${ds["@iot.id"]},${freq},${use}`
+                o[observedProperty.name] = `${ds["@iot.id"]},${freq},${use}`
                 response.ds.push(o)
             }
 
