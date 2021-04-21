@@ -14,9 +14,12 @@ async function Register(req, res) {
     var serial = req.body.serial
     var id = 0
 
+    if (!serial)
+        return res.status(500).json()
+
     debug(`Registration from device with serial: ${serial}`)
 
-    var rawData = fs.readFileSync(path.join('./config', `/${config.service}`, `thing.json`));
+    var rawData = fs.readFileSync(path.join(__dirname, '../config', `/${config.service}`, `thing.json`));
     var _thing = JSON.parse(rawData);
 
     var serviceUrl = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
@@ -25,7 +28,7 @@ async function Register(req, res) {
     var records = await registrar.find(config.service, serial)
     if (0 == records.length) {
 
-        debug(`Unknown device ${serial}, setting it up in ${serviceUrl}`)
+        debug(`Unknown device ${serial}, sending configuration (${_thing['Datastreams'].length} Datastreams) to ${serviceUrl}`)
 
         await http
             .post(`${serviceUrl}/Things`, _thing)
@@ -41,9 +44,11 @@ async function Register(req, res) {
             })
     } else {
         var record = records[0]
-        debug(`Known device ${serial} with Thing@iot.id ${id} registered`)
         id = record.id
+        debug(`Known device ${serial} with Thing@iot.id ${id} registered`)
     }
+
+    debug(serviceUrl)
 
     await http
         .get(`${serviceUrl}/Things(${id})/Datastreams?$expand=ObservedProperty`)

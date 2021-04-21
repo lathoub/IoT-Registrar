@@ -3,7 +3,6 @@ global.window = { process: { type: 'renderer' } }
 
 const debug = require('debug')('registrar:http')
 const app = require('./index')
-require('dotenv').config();
 
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config')[env];

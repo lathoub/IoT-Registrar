@@ -1,11 +1,10 @@
 const express = require('express')
 const debug = require('debug')('registrar:route')
 
-var helmet = require('helmet')
+//var helmet = require('helmet')
 
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config')[env];
-require('dotenv').config()
 
 var database = require('./database')
 
