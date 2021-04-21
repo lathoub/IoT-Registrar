@@ -10,7 +10,7 @@ var config = require('./config')[env];
 config.service = process.env.SERVICE
 config.pitas.resource = `${config.service}/${config.version}`
 
-app.listen(config.express.port, function (error) {
+var server = app.listen(config.express.port, function (error) {
   if (error) {
     debug('Unable to listen for connections', error)
     process.exit(10)
@@ -18,3 +18,9 @@ app.listen(config.express.port, function (error) {
 
   debug(`(${env}) IoT Registrar listening on port ${config.express.port}`)
 })
+
+// Handle ^C
+process.on('SIGINT', function () {
+  server.close()
+  process.exit()
+});
