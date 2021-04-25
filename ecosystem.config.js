@@ -7,7 +7,6 @@ module.exports = {
       time: true,
       env: {
         DEBUG: "registrar:*",
-        DB_password: "Aardvark00!",
         SERVICE: "tracker"
       }
     }

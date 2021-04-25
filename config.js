@@ -6,8 +6,8 @@ var config = {
     service: 'replaced in app.js',
     pitas: {
       protocol: 'http://',
-      host: '192.168.0.157',
-      port: 32796,
+      host: 'kontich.synology.me',
+      port: 8080,
       resource: 'FROST-Server/v1.0',
     },
     version: 'v1.0',
