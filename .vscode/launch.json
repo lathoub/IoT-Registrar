@@ -16,7 +16,7 @@
             "env": {
 				"DEBUG": "registrar:*",
                 "SERVICE": "tracker",
-                "DB_PASSWORD": "tracker"
+                "DB_PASSWORD": "Aardvark00!"
 			},
         }
     ]

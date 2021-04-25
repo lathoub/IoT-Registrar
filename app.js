@@ -8,7 +8,6 @@ var env = process.env.NODE_ENV || 'development';
 var config = require('./config')[env];
 
 config.service = process.env.SERVICE
-config.pitas.resource = `${config.service}/${config.version}`
 
 var server = app.listen(config.express.port, function (error) {
   if (error) {

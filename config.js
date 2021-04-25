@@ -6,16 +6,11 @@ var config = {
     service: 'replaced in app.js',
     pitas: {
       protocol: 'http://',
-      host: 'kontich.synology.me',
-      port: 8080
+      host: '192.168.0.157',
+      port: 32796,
+      resource: 'FROST-Server/v1.0',
     },
     version: 'v1.0',
-    mariadb: {
-      host: '192.168.0.157',
-      user: 'patrice',
-      database: 'iot_register',
-      port: 3307
-    }
   },
   production: {
     express: {
@@ -25,15 +20,9 @@ var config = {
     pitas: {
       protocol: 'http://',
       host: 'kontich.synology.me',
-      port: 8080
+      port: 8080,
     },
     version: 'v1.0',
-    mariadb: {
-      host: '192.168.0.157',
-      user: 'patrice',
-      database: 'iot_register',
-      port: 3307
-    }
   }
 }
 

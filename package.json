@@ -8,6 +8,6 @@
     "mariadb": "^2.5.3"
   },
   "scripts": {
-    "start": "set DEBUG=registrar:* && node app.js"
+    "start": "pm2 start ecosystem.config.js"
   }
 }

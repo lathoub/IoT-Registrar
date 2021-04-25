@@ -1,5 +1,5 @@
 {
-    "name": "Tracker",
+    "name": null,
     "description": "Vehicle Tracker",
     "properties": {
         "Copyright": "2021 Lathoub",
@@ -28,12 +28,6 @@
                 "name": "Velocity",
                 "symbol": "km/hr",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#KilometerPerHour"
-            },
-            "ObservedProperty": {
-                "@iot.id": 2
-            },
-            "Sensor": {
-                "@iot.id": 1
             }
         }
      ]
