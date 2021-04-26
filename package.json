@@ -4,8 +4,6 @@
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
-    "helmet": "^4.4.1",
-    "mariadb": "^2.5.3"
   },
   "scripts": {
     "start": "pm2 start ecosystem.config.js"

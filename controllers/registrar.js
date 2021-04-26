@@ -28,23 +28,21 @@ async function Register(req, res) {
         .catch(error => {
             return res.status(500).error
         })
+
     if (!thing['@iot.id']) {
         var setup = require(`../config/${config.service}/support.js`)
         thing = await setup.createThing(serviceUrl, serial);
-    }
 
-    if (!thing['@iot.id'])
         await http
             .post(`${serviceUrl}/Things`, thing)
             .then(r => {
-                if (201 != r.status) 
+                if (201 != r.status)
                     return res.status(500).r
             })
             .catch(error => {
                 return res.status(500).error
             })
 
-    if (!thing['@iot.id'])
         await http
             .get(`${serviceUrl}/Things?$filter=name eq '${serial}'`)
             .then(r => {
@@ -55,6 +53,7 @@ async function Register(req, res) {
             .catch(error => {
                 return res.status(500).error
             })
+    }
 
     await http
         .get(`${serviceUrl}/Things(${thing['@iot.id']})/Datastreams?$expand=ObservedProperty`)

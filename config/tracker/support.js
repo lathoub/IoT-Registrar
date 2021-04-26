@@ -9,58 +9,91 @@ function readObject(fileName) {
 }
 
 async function createThing(serviceUrl, serial) {
-    var sensor = readObject('sensor.json')
-    await http
-        .get(`${serviceUrl}/Sensors?$filter=name eq '${sensor.name}'`)
-        .then(r => {
-            if (r.data.value.length > 0)
-                sensor = r.data.value[0]
-        })
-        .catch(error => {
-            debug(error)
-            return null
-        })
-    if (!sensor['@iot.id']) {
+
+    var sensors = readObject('sensors.json')
+    for (var i = 0; i < sensors.length; i++) {
         await http
-            .post(`${serviceUrl}/Sensors`, sensor)
+            .get(`${serviceUrl}/Sensors?$filter=name eq '${sensors[i].name}'`)
             .then(r => {
-                if (201 != r.status) {
-                }
+                if (r.data.value.length > 0)
+                sensors[i] = r.data.value[0]
             })
             .catch(error => {
                 debug(error)
                 return null
             })
+
+        if (!sensors[i]['@iot.id']) {
+            await http
+                .post(`${serviceUrl}/Sensors`, sensors[i])
+                .then(r => {
+                    if (201 != r.status) {
+                    }
+                })
+                .catch(error => {
+                    debug(error)
+                    return null
+                })
+
+            await http
+                .get(`${serviceUrl}/Sensors?$filter=name eq '${sensors[i].name}'`)
+                .then(r => {
+                    if (r.data.value.length > 0)
+                    sensors[i] = r.data.value[0]
+                })
+                .catch(error => {
+                    debug(error)
+                    return null
+                })
+        }
     }
 
-    var observedProperty = readObject('observedProperty.json')
-    await http
-        .get(`${serviceUrl}/ObservedProperties?$filter=name eq '${observedProperty.name}'`)
-        .then(r => {
-            if (r.data.value.length > 0)
-                observedProperty = r.data.value[0]
-        })
-        .catch(error => {
-            debug(error)
-            return null
-        })
-    if (!observedProperty['@iot.id'])
+    var observedProperties = readObject('observedProperties.json')
+    for (var i = 0; i < observedProperties.length; i++) {
         await http
-            .post(`${serviceUrl}/ObservedProperties`, observedProperty)
+            .get(`${serviceUrl}/ObservedProperties?$filter=name eq '${observedProperties[i].name}'`)
             .then(r => {
-                if (201 != r.status) {
-                }
+                if (r.data.value.length > 0)
+                observedProperties[i] = r.data.value[0]
             })
             .catch(error => {
                 debug(error)
                 return null
             })
 
+        if (!observedProperties[i]['@iot.id']) {
+            await http
+                .post(`${serviceUrl}/ObservedProperties`, observedProperties[i])
+                .then(r => {
+                    if (201 != r.status) {
+                    }
+                })
+                .catch(error => {
+                    debug(error)
+                    return null
+                })
+
+            await http
+                .get(`${serviceUrl}/ObservedProperties?$filter=name eq '${observedProperties[i].name}'`)
+                .then(r => {
+                    if (r.data.value.length > 0)
+                    observedProperties[i] = r.data.value[0]
+                })
+                .catch(error => {
+                    debug(error)
+                    return null
+                })
+        }
+    }
+
+    // TODO
     var thing = readObject('thing.json')
     thing.name = serial
-    var datastream = thing['Datastreams'][0]
-    datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-    datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    var datastreams = thing['Datastreams']
+    for (var i = 0; i < datastreams.length; i++) {
+        datastreams[i]['Sensor']           = { '@iot.id': sensor['@iot.id'] }
+        datastreams[i]['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    }
 
     return thing;
 }
