@@ -21,6 +21,7 @@ var config = {
       protocol: 'http://',
       host: 'kontich.synology.me',
       port: 8080,
+      resource: 'FROST-Server/v1.0',
     },
     version: 'v1.0',
   }

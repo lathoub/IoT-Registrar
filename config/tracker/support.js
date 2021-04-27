@@ -103,16 +103,11 @@ async function createThing(serviceUrl, serial) {
     thing.name = serial
 
     var datastreams = thing['Datastreams']
-    for (var i = 0; i < datastreams.length; i++) {
 
-        var sensor = lookup(sensors, 'NEO-6M');
-        if (!sensor) continue
-        var observedProperty = lookup(observedProperties, 'Velocity');
-        if (!observedProperty) continue
-
-        // Add Sensor & ObservedProperty
-        datastreams[i]['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-        datastreams[i]['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    {
+        var datastream = lookup(datastreams, 'Vehicle Speed')
+        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'NEO-6M')['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': lookup(observedProperties, 'Velocity')['@iot.id'] }
     }
 
     return thing;

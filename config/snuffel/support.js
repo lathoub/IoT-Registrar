@@ -104,14 +104,42 @@ async function createThing(serviceUrl, serial) {
 
     var datastreams = thing['Datastreams']
 
-    var sensor = lookup(sensors, 'NEO-6M')
-    if (!sensor) return null
-    var observedProperty = lookup(observedProperties, 'Velocity')
-    if (!observedProperty) return null
+    {
+        var datastream = lookup(datastreams, 'Air Temperature DS')
+        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    }
 
-    // Add Sensor & ObservedProperty
-    datastreams[i]['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-    datastreams[i]['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    {
+        var datastream = lookup(datastreams, 'Relative Luchtvochtigheid')
+        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    }
+    {
+        var datastream = lookup(datastreams, 'PM10')
+        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    }
+    {
+        var datastream = lookup(datastreams, 'PM25')
+        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    }
+    {
+        var datastream = lookup(datastreams, 'NO2')
+        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    }
+    {
+        var datastream = lookup(datastreams, 'Geluidsdruk')
+        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    }
+    {
+        var datastream = lookup(datastreams, 'Spanning')
+        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+    }
 
     return thing;
 }
@@ -120,14 +148,14 @@ async function createThing(serviceUrl, serial) {
 function getReturnObject(r, config) {
 
     var response = {}
-    
+
     response['service'] = {}
     response['service']['protocol'] = config.pitas.protocol
     response['service']['host'] = config.pitas.host
     response['service']['port'] = config.pitas.port
     response['service']['resource'] = "/" + config.pitas.resource
 
-   
+
     response.time = new Date().toISOString()
     response.cnt = r.data.value.length
     response.ds = []
