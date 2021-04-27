@@ -28,12 +28,6 @@
                 "name": "Degree Celsius",
                 "symbol": "degC",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
-            },
-            "ObservedProperty": {
-                "@iot.id": 1
-            },
-            "Sensor": {
-                "@iot.id": 1
             }
         },
         {
@@ -44,12 +38,6 @@
                 "name": "Procent",
                 "symbol": "%",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
-            },
-            "ObservedProperty": {
-                "@iot.id": 2
-            },
-            "Sensor": {
-                "@iot.id": 2
             }
         },
         {
@@ -60,12 +48,6 @@
                 "name": "Parts per Million",
                 "symbol": "ppm",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
-            },
-            "ObservedProperty": {
-                "@iot.id": 3
-            },
-            "Sensor": {
-                "@iot.id": 3
             }
         },
         {
@@ -76,12 +58,6 @@
                 "name": "Parts per Million",
                 "symbol": "ppm",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
-            },
-            "ObservedProperty": {
-                "@iot.id": 4
-            },
-            "Sensor": {
-                "@iot.id": 4
             }
         },
         {
@@ -92,12 +68,6 @@
                 "name": "Parts per Million",
                 "symbol": "ppm",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
-            },
-            "ObservedProperty": {
-                "@iot.id": 5
-            },
-            "Sensor": {
-                "@iot.id": 5
             }
         },
         {
@@ -108,12 +78,6 @@
                 "name": "Decibel",
                 "symbol": "dbA",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
-            },
-            "ObservedProperty": {
-                "@iot.id": 6
-            },
-            "Sensor": {
-                "@iot.id": 6
             }
         },
         {
@@ -124,12 +88,6 @@
                 "name": "Volt",
                 "symbol": "v",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
-            },
-            "ObservedProperty": {
-                "@iot.id": 7
-            },
-            "Sensor": {
-                "@iot.id": 7
             }
         }
     ]

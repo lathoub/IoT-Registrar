@@ -1,7 +1,7 @@
 const debug = require('debug')('registrar:tracker')
 const http = require('axios')
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
 
 function readObject(fileName) {
     var rawData = fs.readFileSync(path.join(__dirname, fileName));
@@ -103,38 +103,34 @@ async function createThing(serviceUrl, serial) {
     thing.name = serial
 
     var datastreams = thing['Datastreams']
-    for (var i = 0; i < datastreams.length; i++) {
 
-        var sensor = lookup(sensors, 'NEO-6M');
-        if (!sensor) continue
-        var observedProperty = lookup(observedProperties, 'Velocity');
-        if (!observedProperty) continue
+    var sensor = lookup(sensors, 'NEO-6M')
+    if (!sensor) return null
+    var observedProperty = lookup(observedProperties, 'Velocity')
+    if (!observedProperty) return null
 
-        // Add Sensor & ObservedProperty
-        datastreams[i]['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-        datastreams[i]['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
-    }
+    // Add Sensor & ObservedProperty
+    datastreams[i]['Sensor'] = { '@iot.id': sensor['@iot.id'] }
+    datastreams[i]['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
 
     return thing;
 }
 
 function getReturnObject(r, config) {
+
     var response = {}
-    response['homeNr'] = "+32473404020"
-    response['service'] = {}
-    response['service']['protocol'] = config.pitas.protocol
-    response['service']['host'] = config.pitas.host
-    response['service']['port'] = config.pitas.port
-    response['service']['resource'] = "/" + config.pitas.resource
-    //   response['components'] = ['name', '@iot.id']
-    //   response['count'] = r.data.value.length
-    response.Datastreams = []
+    response.time = new Date().toISOString()
+    response.cnt = r.data.value.length
+    response.ds = []
+
+    var freq = config.frequency || 15
+    var use = config.use || 1
 
     for (var ds of r.data.value) {
         var observedProperty = ds['ObservedProperty']
         var o = new Object();
-        o[observedProperty.name] = `${ds["@iot.id"]}`
-        response.Datastreams.push(o)
+        o[observedProperty.name] = `${ds["@iot.id"]},${freq},${use}`
+        response.ds.push(o)
     }
 
     return response
