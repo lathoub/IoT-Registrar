@@ -116,9 +116,18 @@ async function createThing(serviceUrl, serial) {
     return thing;
 }
 
+// TODO Patric
 function getReturnObject(r, config) {
 
     var response = {}
+    
+    response['service'] = {}
+    response['service']['protocol'] = config.pitas.protocol
+    response['service']['host'] = config.pitas.host
+    response['service']['port'] = config.pitas.port
+    response['service']['resource'] = "/" + config.pitas.resource
+
+   
     response.time = new Date().toISOString()
     response.cnt = r.data.value.length
     response.ds = []
