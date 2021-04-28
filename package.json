@@ -1,4 +1,9 @@
 {
+  "name": "iot_registrar",
+  "version": "1.0.0",
+  "description": "register iot device for OGC SensorThingsAPI",
+  "author": "First Last <first.last@example.com>",
+  "main": "app.js",
   "dependencies": {
     "axios": "^0.21.1",
     "debug": "^4.1.1",
