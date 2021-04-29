@@ -6,7 +6,7 @@ var config = {
     service: 'replaced in app.js',
     pitas: {
       protocol: 'http://',
-      host: 'kontich.synology.me',
+      host: 'snuffeldb.synology.me',
       port: 8080,
       resource: 'FROST-Server/v1.0',
     },
@@ -19,7 +19,7 @@ var config = {
     service: 'replaced in app.js',
     pitas: {
       protocol: 'http://',
-      host: 'kontich.synology.me',
+      host: 'snuffeldb.synology.me',
       port: 8080,
       resource: 'FROST-Server/v1.0',
     },

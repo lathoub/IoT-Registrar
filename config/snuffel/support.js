@@ -30,31 +30,20 @@ async function createThing(serviceUrl, serial) {
                 return null
             })
 
-        if (!sensors[i]['@iot.id']) {
+        if (!sensors[i]['@iot.id'])
             await http
                 .post(`${serviceUrl}/Sensors`, sensors[i])
                 .then(r => {
-                    if (201 != r.status) {
-                    }
+                    if (201 != r.status)
+                        return null
+                    var location = r.headers['location']
+                    var id = location.substring(location.lastIndexOf("(") + 1, location.lastIndexOf(")"));
+                    sensors[i]['@iot.id'] = id
                 })
                 .catch(error => {
                     debug(error)
                     return null
                 })
-
-            // the above post does not return anything, 
-            // so we have to get the resource again for the @iot.id identifier
-            await http
-                .get(`${serviceUrl}/Sensors?$filter=name eq '${sensors[i].name}'`)
-                .then(r => {
-                    if (r.data.value.length > 0)
-                        sensors[i] = r.data.value[0]
-                })
-                .catch(error => {
-                    debug(error)
-                    return null
-                })
-        }
     }
 
     var observedProperties = readObject('observedProperties.json')
@@ -70,31 +59,20 @@ async function createThing(serviceUrl, serial) {
                 return null
             })
 
-        if (!observedProperties[i]['@iot.id']) {
+        if (!observedProperties[i]['@iot.id'])
             await http
                 .post(`${serviceUrl}/ObservedProperties`, observedProperties[i])
                 .then(r => {
-                    if (201 != r.status) {
-                    }
+                    if (201 != r.status)
+                        return null
+                    var location = r.headers['location']
+                    var id = location.substring(location.lastIndexOf("(") + 1, location.lastIndexOf(")"));
+                    observedProperties[i]['@iot.id'] = id
                 })
                 .catch(error => {
                     debug(error)
                     return null
                 })
-
-            // the above post does not return anything, 
-            // so we have to get the resource again for the @iot.id identifier
-            await http
-                .get(`${serviceUrl}/ObservedProperties?$filter=name eq '${observedProperties[i].name}'`)
-                .then(r => {
-                    if (r.data.value.length > 0)
-                        observedProperties[i] = r.data.value[0]
-                })
-                .catch(error => {
-                    debug(error)
-                    return null
-                })
-        }
     }
 
     var thing = readObject('thing.json')
@@ -144,17 +122,11 @@ async function createThing(serviceUrl, serial) {
     return thing;
 }
 
-// TODO Patric
 function getReturnObject(r, config) {
 
     var response = {}
 
-    response['service'] = {}
-    response['service']['protocol'] = config.pitas.protocol
-    response['service']['host'] = config.pitas.host
-    response['service']['port'] = config.pitas.port
-    response['service']['resource'] = "/" + config.pitas.resource
-
+    response['service'] = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
 
     response.time = new Date().toISOString()
     response.cnt = r.data.value.length

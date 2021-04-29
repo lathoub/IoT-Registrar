@@ -38,17 +38,9 @@ async function Register(req, res) {
             .then(r => {
                 if (201 != r.status)
                     return res.status(500).r
-            })
-            .catch(error => {
-                return res.status(500).error
-            })
-
-        await http
-            .get(`${serviceUrl}/Things?$filter=name eq '${serial}'`)
-            .then(r => {
-                debug(r.data.value)
-                if (r.data.value.length > 0)
-                    thing = r.data.value[0]
+                var location = r.headers['location']
+                var id = location.substring(location.lastIndexOf("(") + 1, location.lastIndexOf(")"));
+                thing['@iot.id'] = id
             })
             .catch(error => {
                 return res.status(500).error

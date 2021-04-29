@@ -19,27 +19,16 @@
             }
         }
     ],
-    "MultiDatastream": [
+    "Datastreams": [
         {
             "name": "Vehicle Tracking",
             "description": "Tracks vehicle as it drives",
-            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_ComplexObservation",
-            "unitOfMeasurements": [
-                {
-                    "name": "Velocity",
-                    "symbol": "km/hr",
-                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#KilometerPerHour"
-                },
-                {
-                    "name": "battery",
-                    "symbol": "mV",
-                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#KilometerPerHour"
-                }
-            ],
-            "multiObservationDataTypes": [
-                "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
-                "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement"
-            ]
+            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Observation",
+            "unitOfMeasurement": {
+                "name": "Velocity",
+                "symbol": "km/hr",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#KilometerPerHour"
+            }
         }
     ]
 }

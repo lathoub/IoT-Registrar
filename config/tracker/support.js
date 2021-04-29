@@ -34,8 +34,11 @@ async function createThing(serviceUrl, serial) {
             await http
                 .post(`${serviceUrl}/Sensors`, sensors[i])
                 .then(r => {
-                    if (201 != r.status) {
-                    }
+                    if (201 != r.status)
+                        return null
+                    var location = r.headers['location']
+                    var id = location.substring(location.lastIndexOf("(") + 1, location.lastIndexOf(")"));
+                    sensors[i]['@iot.id'] = id
                 })
                 .catch(error => {
                     debug(error)
@@ -44,16 +47,17 @@ async function createThing(serviceUrl, serial) {
 
             // the above post does not return anything, 
             // so we have to get the resource again for the @iot.id identifier
-            await http
-                .get(`${serviceUrl}/Sensors?$filter=name eq '${sensors[i].name}'`)
-                .then(r => {
-                    if (r.data.value.length > 0)
-                        sensors[i] = r.data.value[0]
-                })
-                .catch(error => {
-                    debug(error)
-                    return null
-                })
+            if (!sensors[i]['@iot.id'])
+                await http
+                    .get(`${serviceUrl}/Sensors?$filter=name eq '${sensors[i].name}'`)
+                    .then(r => {
+                        if (r.data.value.length > 0)
+                            sensors[i] = r.data.value[0]
+                    })
+                    .catch(error => {
+                        debug(error)
+                        return null
+                    })
         }
     }
 
@@ -74,8 +78,11 @@ async function createThing(serviceUrl, serial) {
             await http
                 .post(`${serviceUrl}/ObservedProperties`, observedProperties[i])
                 .then(r => {
-                    if (201 != r.status) {
-                    }
+                    if (201 != r.status)
+                        return null
+                    var location = r.headers['location']
+                    var id = location.substring(location.lastIndexOf("(") + 1, location.lastIndexOf(")"));
+                    observedProperties[i]['@iot.id'] = id
                 })
                 .catch(error => {
                     debug(error)
@@ -84,16 +91,17 @@ async function createThing(serviceUrl, serial) {
 
             // the above post does not return anything, 
             // so we have to get the resource again for the @iot.id identifier
-            await http
-                .get(`${serviceUrl}/ObservedProperties?$filter=name eq '${observedProperties[i].name}'`)
-                .then(r => {
-                    if (r.data.value.length > 0)
-                        observedProperties[i] = r.data.value[0]
-                })
-                .catch(error => {
-                    debug(error)
-                    return null
-                })
+            if (!observedProperties[i]['@iot.id'])
+                await http
+                    .get(`${serviceUrl}/ObservedProperties?$filter=name eq '${observedProperties[i].name}'`)
+                    .then(r => {
+                        if (r.data.value.length > 0)
+                            observedProperties[i] = r.data.value[0]
+                    })
+                    .catch(error => {
+                        debug(error)
+                        return null
+                    })
         }
     }
 
@@ -106,7 +114,7 @@ async function createThing(serviceUrl, serial) {
 
     {
         var datastream = lookup(datastreams, 'Vehicle Tracking')
-        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'NEO-6M')['@iot.id'] }
+        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'NEO-6M3')['@iot.id'] }
         datastream['ObservedProperty'] = { '@iot.id': lookup(observedProperties, 'Velocity')['@iot.id'] }
     }
 
