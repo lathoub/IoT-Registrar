@@ -129,6 +129,7 @@ function getReturnObject(r, config) {
     response['service'] = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
 
     response.time = new Date().toISOString()
+    response.sendFrequency = 12
     response.cnt = r.data.value.length
     response.ds = []
 
