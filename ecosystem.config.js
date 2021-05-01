@@ -7,7 +7,7 @@ module.exports = {
       time: true,
       env: {
         DEBUG: "registrar:*",
-        SERVICE: "snuffel"
+        SERVICE: "snuffeldb"
       }
     }
   ]
