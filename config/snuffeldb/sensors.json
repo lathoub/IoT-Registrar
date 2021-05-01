@@ -1,0 +1,26 @@
+[
+    {
+        "name": "SHT85",
+        "description": "Digital Humidity Sensor SHT85 (RH/T)",
+        "encodingType": "application/pdf",
+        "metadata": "https://www.sensirion.com/en/environmental-sensors/humidity-sensors/sht85-pin-type-humidity-sensor-enabling-easy-replaceability/"
+    },
+    {
+        "name": "SPS30",
+        "description": "Particulate Matter Sensor SPS30",
+        "encodingType": "application/pdf",
+        "metadata": "https://www.sensirion.com/en/environmental-sensors/particulate-matter-sensors-pm25/"
+    },
+    {
+        "name": "ZE03",
+        "description": "Electrochemical Gas Detection Module",
+        "encodingType": "application/pdf",
+        "metadata": "https://www.tme.eu/Document/6daed599fdbe3dd196898dc0c001515c/ZE03.pdf"
+    },
+    {
+        "name": "SEN0232",
+        "description": "Sound Level dbA",
+        "encodingType": "html/text",
+        "metadata": "https://wiki.dfrobot.com/Gravity__Analog_Sound_Level_Meter_SKU_SEN0232"
+    }
+]

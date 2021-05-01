@@ -26,8 +26,8 @@ const service = process.env.SERVICE;
 start()
 
 async function start() {
-  app.use(`/${service}/${version}/`, require('./route'))
-  debug(`/${service}/${version}/ running`)
+  app.use(`/`, require('./route'))
+  debug(`/ running`)
 }
 
 module.exports = app

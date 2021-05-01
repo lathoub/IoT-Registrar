@@ -30,7 +30,7 @@ async function createThing(serviceUrl, serial) {
                 return null
             })
 
-        if (!sensors[i]['@iot.id'])
+        if (!sensors[i]['@iot.id']) {
             await http
                 .post(`${serviceUrl}/Sensors`, sensors[i])
                 .then(r => {
@@ -44,6 +44,9 @@ async function createThing(serviceUrl, serial) {
                     debug(error)
                     return null
                 })
+        }
+        if (!sensors[i]['@iot.id'])
+            return null
     }
 
     var observedProperties = readObject('observedProperties.json')
@@ -59,7 +62,7 @@ async function createThing(serviceUrl, serial) {
                 return null
             })
 
-        if (!observedProperties[i]['@iot.id'])
+        if (!observedProperties[i]['@iot.id']) {
             await http
                 .post(`${serviceUrl}/ObservedProperties`, observedProperties[i])
                 .then(r => {
@@ -73,6 +76,9 @@ async function createThing(serviceUrl, serial) {
                     debug(error)
                     return null
                 })
+        }
+        if (!observedProperties[i]['@iot.id'])
+            return null
     }
 
     var thing = readObject('thing.json')
@@ -83,55 +89,45 @@ async function createThing(serviceUrl, serial) {
     var datastreams = thing['Datastreams']
 
     {
-        var datastream = lookup(datastreams, 'Air Temperature DS')
-        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+        var datastream = lookup(datastreams, 'AirTemperature')
+        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'SHT85')['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': lookup(observedProperties, 'AirTemperature')['@iot.id'] }
     }
 
     {
-        var datastream = lookup(datastreams, 'Relative Luchtvochtigheid')
-        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+        var datastream = lookup(datastreams, 'RelativeHumidity')
+        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'SHT85')['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': lookup(observedProperties, 'RelativeHumidity')['@iot.id'] }
     }
     {
         var datastream = lookup(datastreams, 'PM10')
-        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'SPS30')['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': lookup(observedProperties, 'PM10')['@iot.id'] }
     }
     {
         var datastream = lookup(datastreams, 'PM25')
-        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'SPS30')['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': lookup(observedProperties, 'PM25')['@iot.id'] }
     }
     {
         var datastream = lookup(datastreams, 'NO2')
-        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'ZE03')['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': lookup(observedProperties, 'NO2')['@iot.id'] }
     }
     {
-        var datastream = lookup(datastreams, 'Geluidsdruk')
-        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
-    }
-    {
-        var datastream = lookup(datastreams, 'Spanning')
-        datastream['Sensor'] = { '@iot.id': sensor['@iot.id'] }
-        datastream['ObservedProperty'] = { '@iot.id': observedProperty['@iot.id'] }
+        var datastream = lookup(datastreams, 'SoundPressure')
+        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'SEN0232')['@iot.id'] }
+        datastream['ObservedProperty'] = { '@iot.id': lookup(observedProperties, 'SoundPressure')['@iot.id'] }
     }
 
     return thing;
 }
 
-function getReturnObject(r, config) {
+function getReturnObject(response, r, config) {
 
-    var response = {}
-
-    response['service'] = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
-
-    response.time = new Date().toISOString()
-    response.sendFrequency = 12
     response.cnt = r.data.value.length
     response.ds = []
+    response.sendFrequency = 12
 
     var freq = config.frequency || 15
     var use = config.use || 1
@@ -142,8 +138,6 @@ function getReturnObject(r, config) {
         o[observedProperty.name] = `${ds["@iot.id"]},${freq},${use}`
         response.ds.push(o)
     }
-
-    return response
 }
 
 module.exports = {

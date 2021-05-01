@@ -13,15 +13,15 @@
             "location": {
                 "type": "Point",
                 "coordinates": [
-                    51,
-                    4
+                    4.472791,
+                    51.028429
                 ]
             }
         }
     ],
     "Datastreams": [
         {
-            "name": "Air Temperature DS",
+            "name": "AirTemperature",
             "description": "Datastream for recording temperature",
             "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
             "unitOfMeasurement": {
@@ -31,8 +31,8 @@
             }
         },
         {
-            "name": "Relative Luchtvochtigheid",
-            "description": "Relative Luchtvochtigheid",
+            "name": "RelativeHumidity",
+            "description": "RelativeHumidity",
             "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
             "unitOfMeasurement": {
                 "name": "Procent",
@@ -71,22 +71,12 @@
             }
         },
         {
-            "name": "Geluidsdruk",
-            "description": "Geluidsdruk",
+            "name": "SoundPressure",
+            "description": "Sound Pressure",
             "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
             "unitOfMeasurement": {
                 "name": "Decibel",
                 "symbol": "dbA",
-                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
-            }
-        },
-        {
-            "name": "Spanning",
-            "description": "Spanning",
-            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
-            "unitOfMeasurement": {
-                "name": "Volt",
-                "symbol": "v",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
             }
         }

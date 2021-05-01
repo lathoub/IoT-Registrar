@@ -47,6 +47,42 @@ async function Register(req, res) {
             })
     }
 
+    var response = {}
+    response['stapi']  = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
+    response.id = thing['@iot.id']
+    response.time = new Date().toISOString()
+    response.sendFrequency = 12
+
+    await http
+        .get(`${serviceUrl}/Things(${thing['@iot.id']})/Datastreams?$expand=ObservedProperty`)
+        .then(r => {
+            debug(`Sending response for Thing@iot.id ${thing['@iot.id']}`)
+            require(`../config/${config.service}/support.js`).getReturnObject(response, r, config);
+        })
+        .catch(error => {
+            return res.status(500).error
+        })
+
+    res.status(200).json(response)
+}
+
+async function Update(req, res) {
+    debug(`Updating from device with serial: ${serial}`)
+
+    var serviceUrl = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
+
+    var thing = ''
+    await http
+        .get(`${serviceUrl}/Things?$filter=name eq '${serial}'`)
+        .then(r => {
+            debug(r.data.value)
+            if (r.data.value.length > 0)
+                thing = r.data.value[0]
+        })
+        .catch(error => {
+            return res.status(500).error
+        })
+
     await http
         .get(`${serviceUrl}/Things(${thing['@iot.id']})/Datastreams?$expand=ObservedProperty`)
         .then(r => {
@@ -57,9 +93,6 @@ async function Register(req, res) {
         .catch(error => {
             return res.status(500).error
         })
-}
-
-async function Update(req, res) {
 }
 
 module.exports = {

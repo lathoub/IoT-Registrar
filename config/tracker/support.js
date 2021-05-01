@@ -114,30 +114,22 @@ async function createThing(serviceUrl, serial) {
 
     {
         var datastream = lookup(datastreams, 'Vehicle Tracking')
-        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'NEO-6M3')['@iot.id'] }
+        datastream['Sensor'] = { '@iot.id': lookup(sensors, 'NEO-6M')['@iot.id'] }
         datastream['ObservedProperty'] = { '@iot.id': lookup(observedProperties, 'Velocity')['@iot.id'] }
     }
 
     return thing;
 }
 
-function getReturnObject(r, config) {
-    var response = {}
-    response['homeNr'] = "+32473404020"
-    response['service'] = {}
-    response['service']['protocol'] = config.pitas.protocol
-    response['service']['host'] = config.pitas.host
-    response['service']['port'] = config.pitas.port
-    response['service']['resource'] = "/" + config.pitas.resource
-    //   response['components'] = ['name', '@iot.id']
-    //   response['count'] = r.data.value.length
-    response.Datastreams = []
+function getReturnObject(response, r, config) {
+    response.cnt = r.data.value.length
+    response.ds = []
 
     for (var ds of r.data.value) {
         var observedProperty = ds['ObservedProperty']
         var o = new Object();
         o[observedProperty.name] = `${ds["@iot.id"]}`
-        response.Datastreams.push(o)
+        response.ds.push(o)
     }
 
     return response
