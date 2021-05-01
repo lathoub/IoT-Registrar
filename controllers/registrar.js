@@ -49,8 +49,6 @@ async function Register(req, res) {
     var response = {}
     response['stapi'] = config.pitas
     response['config'] = `/Things(${thing['@iot.id']})`
-    response.time = new Date().toISOString()
-    response.sendFrequency = 12
 
     await http
         .get(`${serviceUrl}/Things(${thing['@iot.id']})/Datastreams?$expand=ObservedProperty`)
@@ -71,8 +69,6 @@ async function Things(req, res) {
     var serviceUrl = config.pitas
 
     var response = {}
-    response.time = new Date().toISOString()
-    response.sendFrequency = 12
 
     await http
         .get(`${serviceUrl}/Things(${id})/Datastreams?$expand=ObservedProperty`)

@@ -125,9 +125,10 @@ async function createThing(serviceUrl, serial) {
 
 function getReturnObject(response, r, config) {
 
+    response.sendFrequency = 10
+    response.time = new Date().toISOString()
     response.cnt = r.data.value.length
     response.ds = []
-    response.sendFrequency = 12
 
     var freq = config.frequency || 10
     var use = config.use || 1
