@@ -3,6 +3,6 @@ const asyncHandler = require('express-async-handler') // https://www.npmjs.com/p
 const registrar = require('./controllers/registrar')
 
 router.post('/', asyncHandler(registrar.Register))
-//router.get('/Thing(:id)',   asyncHandler(registrar.Thing))
+router.get('/Things(:id)', asyncHandler(registrar.Things))
 
 module.exports = router

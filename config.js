@@ -1,7 +1,7 @@
 var config = {
   development: {
     express: {
-      port: process.env.EXPRESS_PORT || 8081,
+      port: process.env.EXPRESS_PORT || 32797,
     },
     service: 'replaced in app.js',
     pitas: {
@@ -14,7 +14,7 @@ var config = {
   },
   production: {
     express: {
-      port: process.env.EXPRESS_PORT || 8081,
+      port: process.env.EXPRESS_PORT || 32797,
     },
     service: 'replaced in app.js',
     pitas: {

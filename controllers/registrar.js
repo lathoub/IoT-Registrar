@@ -49,25 +49,25 @@ async function Register(req, res) {
 
     var response = {}
     response['stapi'] = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
-//    response['config'] = `https://registrar.snuffeldb.synology.me/Thing(${thing['@iot.id']})`
+    response['config'] = `/Things(${thing['@iot.id']})`
     response.time = new Date().toISOString()
     response.sendFrequency = 12
 
     await http
         .get(`${serviceUrl}/Things(${thing['@iot.id']})/Datastreams?$expand=ObservedProperty`)
         .then(r => {
-            debug(`Sending response for Thing@iot.id ${thing['@iot.id']}`)
             require(`../config/${config.service}/support.js`).getReturnObject(response, r, config);
+            res.status(200).json(response)
         })
         .catch(error => {
             return res.status(500).error
         })
-
-    res.status(200).json(response)
 }
 
-async function Thing(req, res) {
-    debug(`Updating from device with serial: ${req.query}`)
+async function Things(req, res) {
+
+    var id = req.params[0].substring(req.params[0].lastIndexOf("(") + 1, req.params[0].lastIndexOf(")"));
+    debug(`get Thing with id: ${id}`)
 
     var serviceUrl = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
 
@@ -75,31 +75,17 @@ async function Thing(req, res) {
     response.time = new Date().toISOString()
     response.sendFrequency = 12
 
-    var thing = ''
     await http
-        .get(`${serviceUrl}/Things?$filter=name eq '${serial}'`)
+        .get(`${serviceUrl}/Things(${id})/Datastreams?$expand=ObservedProperty`)
         .then(r => {
-            debug(r.data.value)
-            if (r.data.value.length > 0)
-                thing = r.data.value[0]
-        })
-        .catch(error => {
-            return res.status(500).error
-        })
-
-    await http
-        .get(`${serviceUrl}/Things(${thing['@iot.id']})/Datastreams?$expand=ObservedProperty`)
-        .then(r => {
-            debug(`Sending response for Thing@iot.id ${thing['@iot.id']}`)
             require(`../config/${config.service}/support.js`).getReturnObject(response, r, config);
+            res.status(200).json(response)
         })
         .catch(error => {
             return res.status(500).error
         })
-
-    res.status(200).json(response)
 }
 
 module.exports = {
-    Register, Thing
+    Register, Things
 }

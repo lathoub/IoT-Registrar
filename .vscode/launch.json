@@ -15,7 +15,7 @@
             "program": "${workspaceFolder}/app.js",
             "env": {
 				"DEBUG": "registrar:*",
-                "SERVICE": "tracker",
+                "SERVICE": "snuffeldb",
 			},
         }
     ]

@@ -1,4 +1,4 @@
-const debug = require('debug')('registrar:tracker')
+const debug = require('debug')('registrar')
 const http = require('axios')
 const fs = require('fs');
 const path = require('path');
