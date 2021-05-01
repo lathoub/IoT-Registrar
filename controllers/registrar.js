@@ -48,8 +48,8 @@ async function Register(req, res) {
     }
 
     var response = {}
-    response['stapi']  = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
-    response.id = thing['@iot.id']
+    response['stapi'] = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
+//    response['config'] = `https://registrar.snuffeldb.synology.me/Thing(${thing['@iot.id']})`
     response.time = new Date().toISOString()
     response.sendFrequency = 12
 
@@ -66,10 +66,14 @@ async function Register(req, res) {
     res.status(200).json(response)
 }
 
-async function Update(req, res) {
-    debug(`Updating from device with serial: ${serial}`)
+async function Thing(req, res) {
+    debug(`Updating from device with serial: ${req.query}`)
 
     var serviceUrl = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
+
+    var response = {}
+    response.time = new Date().toISOString()
+    response.sendFrequency = 12
 
     var thing = ''
     await http
@@ -87,14 +91,15 @@ async function Update(req, res) {
         .get(`${serviceUrl}/Things(${thing['@iot.id']})/Datastreams?$expand=ObservedProperty`)
         .then(r => {
             debug(`Sending response for Thing@iot.id ${thing['@iot.id']}`)
-            var response = require(`../config/${config.service}/support.js`).getReturnObject(r, config);
-            res.status(200).json(response)
+            require(`../config/${config.service}/support.js`).getReturnObject(response, r, config);
         })
         .catch(error => {
             return res.status(500).error
         })
+
+    res.status(200).json(response)
 }
 
 module.exports = {
-    Register, Update
+    Register, Thing
 }

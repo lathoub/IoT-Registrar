@@ -129,7 +129,7 @@ function getReturnObject(response, r, config) {
     response.ds = []
     response.sendFrequency = 12
 
-    var freq = config.frequency || 15
+    var freq = config.frequency || 10
     var use = config.use || 1
 
     for (var ds of r.data.value) {
