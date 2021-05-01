@@ -15,7 +15,7 @@ var server = app.listen(config.express.port, function (error) {
     process.exit(10)
   }
 
-  debug(`(${env}) IoT Registrar listening on port ${config.express.port}`)
+  debug(`(${env}) IoT Registrar listening on port ${config.express.port} for ${config.service}`)
 })
 
 // Handle ^C

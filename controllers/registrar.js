@@ -8,14 +8,13 @@ async function Register(req, res) {
     var type = /*req.body.type ??*/ 't'
     var version = /*req.body.version ??*/ '1'
     var serial = req.body.serial
-    var id = 0
 
     if (!serial)
         return res.status(500).json()
 
     debug(`Registration from device with serial: ${serial}`)
 
-    var serviceUrl = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
+    var serviceUrl = config.pitas
 
     var thing = ''
     await http
@@ -48,7 +47,7 @@ async function Register(req, res) {
     }
 
     var response = {}
-    response['stapi'] = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
+    response['stapi'] = config.pitas
     response['config'] = `/Things(${thing['@iot.id']})`
     response.time = new Date().toISOString()
     response.sendFrequency = 12
@@ -69,7 +68,7 @@ async function Things(req, res) {
     var id = req.params[0].substring(req.params[0].lastIndexOf("(") + 1, req.params[0].lastIndexOf(")"));
     debug(`get Thing with id: ${id}`)
 
-    var serviceUrl = config.pitas.protocol + config.pitas.host + ':' + config.pitas.port + '/' + config.pitas.resource
+    var serviceUrl = config.pitas
 
     var response = {}
     response.time = new Date().toISOString()
