@@ -4,9 +4,15 @@ const http = require('axios')
 var env = process.env.NODE_ENV || 'development';
 var config = require('../config')[env];
 
+// Register a device
+// Endpoint: http://registrar.snuffeldb.synology.me/
+// Content:
+// {
+//    "serial": "40",
+//    "version": "6.0"
+// }
 async function Register(req, res) {
-    var type = /*req.body.type ??*/ 't'
-    var version = /*req.body.version ??*/ '1'
+    var version = req.body.version ?? '1' // defaults to 1
     var serial = req.body.serial
 
     if (!serial)
@@ -29,8 +35,10 @@ async function Register(req, res) {
         })
 
     if (!thing['@iot.id']) {
+        // first time registrtaion of device
         var setup = require(`../config/${config.service}/support.js`)
         thing = await setup.createThing(serviceUrl, serial);
+        thing["properties"].Version = version
 
         await http
             .post(`${serviceUrl}/Things`, thing)

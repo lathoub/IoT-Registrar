@@ -3,7 +3,6 @@
     "description": "Milieumetingen",
     "properties": {
         "Copyright": "2021 PepEngineering",
-        "Version": "8.0"
     },
     "Locations": [
         {
@@ -78,6 +77,16 @@
                 "name": "Decibel",
                 "symbol": "dbA",
                 "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+            }
+        },
+        {
+            "name": "Battery Level",
+            "description": "Datastream for recording battery level",
+            "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+            "unitOfMeasurement": {
+                "name": "Volt",
+                "symbol": "V",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Volt"
             }
         }
     ]

@@ -28,5 +28,11 @@
         "name": "SoundPressure",
         "definition": "https://en.wikipedia.org/wiki/Sound_pressure",
         "description": "Sound pressure or acoustic pressure is the local pressure deviation from the ambient (average or equilibrium) atmospheric pressure, caused by a sound wave"
-    }
+    },
+    {
+        "name": "Voltage",
+        "definition": "https://en.wikipedia.org/wiki/Voltage",
+        "description": "Electric potential difference"
+   }
+
 ]

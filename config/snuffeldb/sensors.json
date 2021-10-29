@@ -22,5 +22,11 @@
         "description": "Sound Level dbA",
         "encodingType": "html/text",
         "metadata": "https://wiki.dfrobot.com/Gravity__Analog_Sound_Level_Meter_SKU_SEN0232"
+    },
+    {
+        "name": "LiPo",
+        "description": "A lithium-ion battery",
+        "encodingType": "html/text",
+        "metadata": "https://en.wikipedia.org/wiki/Lithium-ion_battery"
     }
 ]

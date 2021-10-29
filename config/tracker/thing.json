@@ -3,7 +3,6 @@
     "description": "Vehicle Tracker",
     "properties": {
         "Copyright": "2021 Lathoub",
-        "Version": "1.0"
     },
     "Locations": [
         {
