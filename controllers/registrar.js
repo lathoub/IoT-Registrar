@@ -12,13 +12,13 @@ var config = require('../config')[env];
 //    "version": "6.0"
 // }
 async function Register(req, res) {
-    var version = req.body.version ?? '1' // defaults to 1
     var serial = req.body.serial
+    var version = req.body.version ?? '1' // defaults to 1
 
     if (!serial)
         return res.status(500).json()
 
-    debug(`Registration from device with serial: ${serial}`)
+    debug(`Registration from device with serial: ${serial} and version: ${version}`)
 
     var serviceUrl = config.pitas
 

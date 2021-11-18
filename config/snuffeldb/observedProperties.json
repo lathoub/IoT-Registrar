@@ -33,6 +33,5 @@
         "name": "Voltage",
         "definition": "https://en.wikipedia.org/wiki/Voltage",
         "description": "Electric potential difference"
-   }
-
+    }
 ]
