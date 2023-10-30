@@ -49,7 +49,6 @@ async function createThing(serviceUrl, serial) {
             return null
     }
 
-    debug('step11')
     var observedProperties = readObject('observedProperties.json')
     for (var i = 0; i < observedProperties.length; i++) {
         await http

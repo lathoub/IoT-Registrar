@@ -13,7 +13,9 @@ var config = require('../config')[env];
 // }
 async function Register(req, res) {
     var serial = req.body.serial
-    var version = req.body.version ?? '1' // defaults to 1
+    var version = /*req.body.version ??*/ '1' // defaults to 1
+    if (req.body.version)
+        version = req.body.version
 
     if (!serial)
         return res.status(500).json()
