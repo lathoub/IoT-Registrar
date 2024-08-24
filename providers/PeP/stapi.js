@@ -133,7 +133,7 @@ async function createThing(serviceUrl, body, sensors, observedProperties) {
   return thing;
 }
 
-export async function launch(serviceUrl, body, callback) {
+export async function execute(serviceUrl, body, callback) {
   let content = {};
   content.links = [];
 

@@ -52,7 +52,7 @@ async function post(neutralUrl, format, body, apiKey, callback) {
   // execute the registration script per provider
   await import(fileName)
     .then((module) => {
-      module.launch(config.url, body, function (err, content, location) {
+      module.execute(config.url, body, function (err, content, location) {
         if (err) {
           callback(err, undefined);
           return;
