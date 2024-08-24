@@ -1,0 +1,20 @@
+[
+    {
+        "name": "DHT22",
+        "description": "humidity & temperature sensor",
+        "encodingType": "application/pdf",
+        "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf"
+    },
+    {
+        "name": "TM-901",
+        "description": "KCS TraceME TM-901 / N1C2",
+        "encodingType": "application/pdf",
+        "metadata": "https://trace.me/techdocs/Datasheet%20TM-901%20PCB-N1C2-V2017-10.pdf"
+    },
+    {
+        "name": "ADW300",
+        "description": "Acrel ADW300 Wireless Energy Meter",
+        "encodingType": "application/pdf",
+        "metadata": "https://www.acrel-electric.eu/product/acrel_adw300"
+    }
+]

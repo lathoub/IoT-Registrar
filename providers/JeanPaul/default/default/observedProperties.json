@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Temperature",
+    "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#ThermodynamicTemperature",
+    "description": "The temperature."
+  },
+  {
+    "name": "Relative Humidity",
+    "definition": "https://en.wikipedia.org/wiki/Relative_humidity",
+    "description": "The relative humidity"
+  },
+  {
+    "name": "Drukknop",
+    "definition": "https://example.com/sensor/drukknop/observedProperty/buttonPress",
+    "description": "Druk op een knop door een mens"
+  },
+  {
+    "name": "ElectricPower",
+    "definition": "https://qudt.org/vocab/quantitykind/ElectricPower",
+    "description": "Energy power consumption"
+  }
+]

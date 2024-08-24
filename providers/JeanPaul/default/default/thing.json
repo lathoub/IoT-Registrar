@@ -1,0 +1,56 @@
+{
+  "name": "<replace>",
+  "description": "<replace>",
+  "properties": {
+  },
+  "Datastreams": [
+    {
+      "!sensorName": "DHT22",
+      "!obsPropName": "AirTemperature",
+      "name": "AirTemperature",
+      "description": "Datastream for recording temperature",
+      "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+      "unitOfMeasurement": {
+        "name": "Degree Celsius",
+        "symbol": "degC",
+        "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+      }
+    },
+    {
+      "!sensorName": "DHT22",
+      "!obsPropName": "RelativeHumidity",
+      "name": "RelativeHumidity",
+      "description": "RelativeHumidity",
+      "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+      "unitOfMeasurement": {
+        "name": "Procent",
+        "symbol": "%",
+        "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+      }
+    },
+    {
+      "!sensorName": "TM-901",
+      "!obsPropName": "Drukknop",
+			"name": "Druk op een knop",
+			"description": "De druk op de knop door een deelnemer",
+      "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+      "unitOfMeasurement": {
+        "name": "Up/Down",
+        "symbol": "O",
+        "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+      }
+    },
+    {
+      "!sensorName": "ADW300",
+      "!obsPropName": "ElectricPower",
+      "name": "Battery Level",
+      "description": "Datastream for recording battery level",
+      "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+      "unitOfMeasurement": {
+        "name": "KiloWattHour",
+        "symbol": "kWh",
+        "definition": "https://qudt.org/vocab/unit/KiloW-HR"
+      }
+    }
+  ]
+}
