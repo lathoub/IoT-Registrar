@@ -1,0 +1,14 @@
+---
+id: IoTRegistrar
+title: IoT Registrar
+description: First thing a thing calls when it wakes up (for the first time).
+metadata:
+  contactName: Jane Doe
+  contactEmail: doe@acme.com
+  creatorName: Acme
+  creatorUrl: https://acme.com
+  publisherName: Acme Inc.
+  publisherUrl: https://www.example.com
+  licenseName: CC0 1.0
+  licenseUrl: http://creativecommons.org/publicdomain/zero/1.0/deed.nl
+  attribution: 'data from Amstelveen'
