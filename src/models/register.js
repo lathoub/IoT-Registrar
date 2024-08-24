@@ -22,7 +22,7 @@ async function post(neutralUrl, format, body, apiKey, callback) {
   body.location = body.location || undefined;
 
   // get STAPI endpoint for this API-Key
-  let path = process.env.DATA_PATH || join(__dirname, "../../data");
+  let path = process.env.PROVIDER_PATH || join(__dirname, "../../providers");
   path = join(path, apiKey);
   let fileName = join(path, "config.yml");
   if (!fs.existsSync(fileName))

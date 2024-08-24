@@ -1,9 +1,9 @@
 {
-  "name": "step19",
+  "name": "IoT-Registrar",
   "description": "",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "",
+  "author": "Bart De Lathouwer",
   "license": "ISC",
   "type": "module",
   "dependencies": {

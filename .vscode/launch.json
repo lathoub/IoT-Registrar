@@ -12,11 +12,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/app.js",
-            "env": {
-				"DEBUG": "registrar:*",
-                "SERVICE": "snuffeldb",
-			},
+            "program": "${workspaceFolder}/src/index.js",       
+            "envFile": "${workspaceFolder}/.env",
         }
     ]
 }
