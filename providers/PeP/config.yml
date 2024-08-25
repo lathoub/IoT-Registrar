@@ -1,3 +1,7 @@
 ---
-service: 'stapi.js'
-url: 'https://stapi.aardvark.myDS.me/FROST-Server/v1.1'
+name: ssdfsdf
+description: sfgasg
+attribution: dfgdfg
+license: sdfg
+service: stapi.js
+url: https://stapi.aardvark.myDS.me/FROST-Server/v1.1

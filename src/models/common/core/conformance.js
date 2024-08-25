@@ -1,5 +1,5 @@
 import urlJoin from 'url-join'
-import utils from '../utils/utils.js'
+import utils from '../../../utils/utils.js'
 
 export function get(neutralUrl, format, callback) {
 
@@ -9,10 +9,7 @@ export function get(neutralUrl, format, callback) {
   var content = {};
   content.conformsTo = [];
 
-  content.conformsTo.push("http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core");
-  content.conformsTo.push("http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html");
-  content.conformsTo.push("http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json");
-  content.conformsTo.push("http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30");
+  content.conformsTo.push("http://www.opengis.net/spec/iot_sensing/1.1/req/datamodel");
 
   content.links = []
   content.links.push({ href: urlJoin(neutralUrl, `?f=${format}`), rel: `self`, type: utils.getTypeFromFormat(format), title: `This document` })

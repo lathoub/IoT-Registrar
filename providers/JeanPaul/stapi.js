@@ -133,13 +133,38 @@ async function createThing(serviceUrl, body, sensors, observedProperties) {
   return thing;
 }
 
-export async function execute(serviceUrl, body, callback) {
+export async function register(serviceUrl, body, callback) {
   let content = {};
   content.links = [];
 
+  // Split body using ,
+  let bodyParts = body.split(",");
+  if (bodyParts.Length <= 0)
+    return callback(
+      {
+        httpCode: 500,
+        code: 'Server error',
+        description: 'message should contains at least 1 parameter',
+      },
+      undefined
+    );
+
+  let _type = 'default'
+  let _version = 'default'
+  let _name = bodyParts[0]
+  let _location = undefined;
+  if (bodyParts.length > 1)
+    type = bodyParts[1]
+  if (bodyParts.length > 2)
+    version = bodyParts[2]
+  if (bodyParts.length > 4) {
+    let x = bodyParts[3];
+    let y = bodyParts[4];
+  }
+
   let thing = {};
   await http
-    .get(`${serviceUrl}/Things?$filter=name eq '${body.name}'`)
+    .get(`${serviceUrl}/Things?$filter=name eq '${_name}'`)
     .then((r) => {
       if (r.data.value.length > 0) thing = r.data.value[0];
     })
@@ -155,13 +180,17 @@ export async function execute(serviceUrl, body, callback) {
     });
 
   if (!thing["@iot.id"]) {
-    let sensors = await createSensors(serviceUrl, body);
-    let observedProperties = await createObsProps(serviceUrl, body);
-    content = await createThing(serviceUrl, body, sensors, observedProperties);
+    // First time registration (name was not found),
+    // create Sensors, ObservatedProperties and Thing itself
+    let sensors = await createSensors(serviceUrl, _name, _type, _version);
+    let observedProperties = await createObsProps(serviceUrl, _name, _type, _version);
+    content = await createThing(serviceUrl, _name, _type, _version, sensors, observedProperties);
 
+    // remove all fluff
     delete content["Datastreams"];
     delete content["Locations"];
   } else {
+    // Thing/Device exists already. Remove fluff
     content = thing;
     delete content["Datastreams@iot.navigationLink"];
     delete content["HistoricalLocations@iot.navigationLink"];
@@ -174,4 +203,7 @@ export async function execute(serviceUrl, body, callback) {
   delete content["@iot.selfLink"];
 
   return callback(undefined, content, location);
+}
+
+export async function observations(serviceUrl, body, callback) {
 }

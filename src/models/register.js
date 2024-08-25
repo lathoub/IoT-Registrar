@@ -6,45 +6,21 @@ const __dirname = import.meta.dirname;
 if (__dirname === undefined) console.log("need node 20.16 or higher");
 
 async function post(neutralUrl, format, body, apiKey, callback) {
-  let name = body.name; // mandatory
-  if (name == undefined)
-    return callback(
-      {
-        httpCode: 404,
-        code: `Not Found`,
-        description: "Id not provided as query parameter",
-      },
-      undefined
-    );
 
-  body.type = body.type || "default";
-  body.version = body.version || "default";
-  body.location = body.location || undefined;
+  // get path to providers folder
+  let path = process.env.PROVIDER_PATH || join(__dirname, "../../providers", apiKey);
 
-  // get STAPI endpoint for this API-Key
-  let path = process.env.PROVIDER_PATH || join(__dirname, "../../providers");
-  path = join(path, apiKey);
-  let fileName = join(path, "config.yml");
+  // get Provider
+  var provider = global.config.providers[apiKey];
+
+  // find filename of dynamic script to execute
+  let fileName = join(path, provider.service);
   if (!fs.existsSync(fileName))
     return callback(
       {
         httpCode: 500,
         code: `server error`,
-        description: `config.yml does not exist`,
-      },
-      undefined
-    );
-
-  const yamlStr = fs.readFileSync(fileName);
-  config = YAML.parse(yamlStr.toString());
-
-  fileName = join(path, config.service);
-  if (!fs.existsSync(fileName))
-    return callback(
-      {
-        httpCode: 500,
-        code: `server error`,
-        description: `${config.service} does not exist`,
+        description: `${provider.service} does not exist`,
       },
       undefined
     );
@@ -52,13 +28,13 @@ async function post(neutralUrl, format, body, apiKey, callback) {
   // execute the registration script per provider
   await import(fileName)
     .then((module) => {
-      module.execute(config.url, body, function (err, content, location) {
+      module.register(provider.url, body, provider, function (err, content) {
         if (err) {
           callback(err, undefined);
           return;
         }
 
-        callback(undefined, content, location);
+        callback(undefined, content);
       });
     })
     .catch((error) => {

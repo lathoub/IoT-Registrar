@@ -30,14 +30,14 @@
     },
     {
       "!sensorName": "TM-901",
-      "!obsPropName": "Drukknop",
-			"name": "Druk op een knop",
-			"description": "De druk op de knop door een deelnemer",
+      "!obsPropName": "Button",
+			"name": "Tracking",
+			"description": "Track when pressed",
       "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
       "unitOfMeasurement": {
         "name": "Up/Down",
         "symbol": "O",
-        "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+        "definition": ""
       }
     },
     {

@@ -6,6 +6,7 @@ import favicon from 'serve-favicon'
 import { join } from 'path'
 import YAML from 'yaml'
 import { readFileSync } from 'fs'
+import utils from './utils/utils.js'
 import encodings from './middleware/encodings.js'
 import apiVersion from './middleware/apiversion.js'
 import apiKey from './middleware/apikey.js'
@@ -17,9 +18,18 @@ const __dirname = import.meta.dirname
 if (__dirname === undefined)
   console.log('need node 20.16 or higher')
 
+// read application configuration from iotregistrar.yml
 const configPath = join(__dirname, '../configuration')
 const yamlStr = readFileSync(join(configPath, 'iotregistrar.yml'))
 global.config = YAML.parse(yamlStr.toString())
+
+// read provider configuration from providers
+global.config.providers = {}
+let providersDirs = utils.getDirectories(process.env.PROVIDER_PATH || join(__dirname, "..", "providers"))
+providersDirs.forEach ((dir) => {
+  const yamlStr = readFileSync(join(dir, 'config.yml'))
+  global.config.providers[dir.match(/([^\/]*)\/*$/)[1]] = YAML.parse(yamlStr.toString())
+})
 
 //app.use(morgan(':method :url :response-time', { stream: { write: msg => console.log(msg) } }));
 
@@ -33,6 +43,7 @@ app.use(favicon(join(__dirname,'public', 'images', 'favicon.ico')));
 
 app.use(express.static(join(__dirname, 'public')));
 app.use(json());
+app.use(express.text());
 
 // No need to tell the world what tools we are using, it only gives
 // out information to not-so-nice people

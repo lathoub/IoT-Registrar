@@ -1,5 +1,5 @@
 import accepts from "accepts";
-import register from "../models/register.js";
+import observations from "../models/observations.js";
 import utils from "../utils/utils.js";
 
 export async function post(req, res) {
@@ -14,12 +14,12 @@ export async function post(req, res) {
   let accept = accepts(req);
   let format = accept.type(["json", "html"]);
 
-  await register.post(
+  await observations.post(
     formatFreeUrl,
     format,
     req.body,
     apiKey,
-    function (err, content) {
+    function (err, content, location) {
       if (err) {
         res
           .status(err.httpCode)
@@ -27,12 +27,11 @@ export async function post(req, res) {
         return;
       }
 
+      res.set("Location", location);
+
       switch (format) {
         case "json":
           res.status(200).json(content);
-          break;
-        case `html`:
-          res.status(200).render(`register`, content);
           break;
         default:
           res.status(400).json({

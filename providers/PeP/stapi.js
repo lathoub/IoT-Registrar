@@ -17,11 +17,13 @@ function lookup(array, key) {
   return null;
 }
 
-async function createSensors(serviceUrl, body) {
-  let path = join(__dirname, body.type, body.version);
+async function createSensors(serviceUrl, name, type, version) {
+  let path = join(__dirname, type, version);
   let fileName = join(path, "sensors.json");
   var sensors = readObject(fileName);
   for (var i = 0; i < sensors.length; i++) {
+    // TODO: create a check cache
+
     await http
       .get(`${serviceUrl}/Sensors?$filter=name eq '${sensors[i].name}'`)
       .then((r) => {
@@ -51,11 +53,13 @@ async function createSensors(serviceUrl, body) {
   return sensors;
 }
 
-async function createObsProps(serviceUrl, body) {
-  let path = join(__dirname, body.type, body.version);
+async function createObsProps(serviceUrl, name, type, version) {
+  let path = join(__dirname, type, version);
   let fileName = join(path, "observedProperties.json");
   var observedProperties = readObject(fileName);
   for (var i = 0; i < observedProperties.length; i++) {
+    // TODO: create a check cache
+
     await http
       .get(
         `${serviceUrl}/ObservedProperties?$filter=name eq '${observedProperties[i].name}'`
@@ -87,18 +91,26 @@ async function createObsProps(serviceUrl, body) {
   return observedProperties;
 }
 
-async function createThing(serviceUrl, body, sensors, observedProperties) {
-  let path = join(__dirname, body.type, body.version);
+async function createThing(
+  serviceUrl,
+  name,
+  type,
+  version,
+  location,
+  sensors,
+  observedProperties
+) {
+  let path = join(__dirname, type, version);
   let fileName = join(path, "thing.json");
   var thing = readObject(fileName);
 
-  thing.name = body.name;
-  thing.description = body.name;
-  thing.properties.type = body.type;
-  thing.properties.version = body.version;
+  thing.name = name;
+  thing.description = name;
+  thing.properties.type = type;
+  thing.properties.version = version;
 
   thing.Locations = [];
-  if (body.location !== undefined) thing.Locations.push(body.location);
+  if (location !== undefined) thing.Locations.push(location);
 
   thing.Datastreams.forEach((datastream) => {
     datastream["Sensor"] = {
@@ -133,13 +145,48 @@ async function createThing(serviceUrl, body, sensors, observedProperties) {
   return thing;
 }
 
-export async function execute(serviceUrl, body, callback) {
+export async function register(serviceUrl, body, provider, callback) {
   let content = {};
   content.links = [];
 
-  let thing = {};
+  // Split body using ,
+  let bodyParts = body.split(",");
+  if (bodyParts.Length <= 0)
+    return callback(
+      {
+        httpCode: 500,
+        code: "Server error",
+        description: "message should contains at least 1 parameter",
+      },
+      undefined
+    );
+
+  let _type = "default";
+  let _version = "default";
+  let _name = bodyParts[0];
+  let _location = undefined;
+  if (bodyParts.length > 1) _type = bodyParts[1];
+  if (bodyParts.length > 2) _version = bodyParts[2];
+  if (bodyParts.length > 4) {
+    let x = bodyParts[3];
+    let y = bodyParts[4];
+    // TODO: create geojson object
+  }
+
+  // if no cache has been made yet, prepare for it here
+  if (provider.cache == undefined) provider.cache = [];
+
+  // if the device is already in cache, return it here. No
+  // need for additional slow HTTP call to the STAPI server
+  let thing = provider.cache[_name]; // WRONG: should include type and version
+  if (thing !== undefined) {
+    // TODO check if location changed
+    return callback(undefined, thing, undefined);
+  }
+
+  // Device is not in the cache - get it from STAPI
   await http
-    .get(`${serviceUrl}/Things?$filter=name eq '${body.name}'`)
+    .get(`${serviceUrl}/Things?$filter=name eq '${_name}'`)
     .then((r) => {
       if (r.data.value.length > 0) thing = r.data.value[0];
     })
@@ -155,9 +202,22 @@ export async function execute(serviceUrl, body, callback) {
     });
 
   if (!thing["@iot.id"]) {
-    let sensors = await createSensors(serviceUrl, body);
-    let observedProperties = await createObsProps(serviceUrl, body);
-    content = await createThing(serviceUrl, body, sensors, observedProperties);
+    let sensors = await createSensors(serviceUrl, _name, _type, _version);
+    let observedProperties = await createObsProps(
+      serviceUrl,
+      _name,
+      _type,
+      _version
+    );
+    content = await createThing(
+      serviceUrl,
+      _name,
+      _type,
+      _version,
+      _location,
+      sensors,
+      observedProperties
+    );
 
     delete content["Datastreams"];
     delete content["Locations"];
@@ -170,8 +230,12 @@ export async function execute(serviceUrl, body, callback) {
 
   content.id = content["@iot.id"];
   delete content["@iot.id"];
-  let location = content["@iot.selfLink"];
   delete content["@iot.selfLink"];
 
-  return callback(undefined, content, location);
+  // add to the cache
+  // provider.cache[_name] = content; // TODO: don't roll out just yet
+
+  return callback(undefined, content);
 }
+
+export async function observations(serviceUrl, body, callback) {}

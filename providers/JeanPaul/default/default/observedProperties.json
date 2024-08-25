@@ -10,9 +10,9 @@
     "description": "The relative humidity"
   },
   {
-    "name": "Drukknop",
+    "name": "Button",
     "definition": "https://example.com/sensor/drukknop/observedProperty/buttonPress",
-    "description": "Druk op een knop door een mens"
+    "description": "Switch to press by human"
   },
   {
     "name": "ElectricPower",
